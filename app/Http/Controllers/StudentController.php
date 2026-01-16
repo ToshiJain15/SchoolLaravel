@@ -41,9 +41,9 @@ class StudentController extends Controller
              $val['languages'],
              $val['photo'],
               
-             "<a href='#' id='$val->id' class='edit btn btn-primary'  data-id='{{ $val->id }}'>Edit</a>
+             "<a href='#' id='".$val->id."' class='edit btn btn-primary'  data-id='".$val->id."'>Edit</a>
     
-             <a href='#' id='$val->id' class='delete btn btn-primary' data-id='{{ $val->id }}'>Delete</a>"
+             <a href='#' id='".$val->id."' class='delete btn btn-primary' data-id='".$val->id."'>Delete</a>"
              ];
             // "<a href='student/edit/$val->id'>Edit</a>
 //  <a href='#'  id='$val->id' class='delete btn btn-primary' data-toggle='modal' data-target='#confirmModal' data-id='{{ $val->id }}'>Delete</a>"

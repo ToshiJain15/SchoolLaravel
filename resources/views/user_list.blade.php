@@ -28,8 +28,8 @@
         <th>Id</th>
         <th>Name</th>
         <th>Email</th>
-        <!-- <th><input type="button" value="Add Class" onclick="window.location.href='http://localhost/example-app/public/class/add'"></th> -->
-        <th><button type="button" class="btn btn-primary add" onclick="location.href='http://localhost/example-app/public/register'">Add</button>
+        <!-- <th><input type="button" value="Add Class" onclick="window.location.href='http://localhost/public/class/add'"></th> -->
+        <th><button type="button" class="btn btn-primary add" onclick="location.href='{{ url('register') }}'">Add</button>
         </th>
     </thead>
     <tbody>
@@ -44,7 +44,7 @@
 <script>
         $(document).ready(function() {
             $('#my').DataTable( {
-                "ajax": "{{url('exam/list/ajax')}}"
+                "ajax": "{{url('login/ajax')}}"
     } );
 } );  
 </script>
@@ -70,7 +70,7 @@
 //   // $('.modal-title').text("Update Record");
 //   $('#submit').text("Update");
 //   $('#examdata').show;
-//   // window.location.reload('http://localhost/example-app/public/exam');
+//   // window.location.reload('http://localhost/public/exam');
 // }
 // });
 // });

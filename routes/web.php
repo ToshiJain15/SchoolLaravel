@@ -8,8 +8,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\SubController;
 use App\Http\Controllers\ExamController;
-use App\Http\Controllers\LoginController;
-
+use App\Http\Controllers\LogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,11 +21,9 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-// Route::get('/', function () {
-//     echo "I am here";
-//     // return view('welcome');
-//     return view('sample');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 //  Route::get('/',[UserController::class,'index']);
 //  Route::get('/add',[UserController::class,'add']);
@@ -117,10 +114,4 @@ Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

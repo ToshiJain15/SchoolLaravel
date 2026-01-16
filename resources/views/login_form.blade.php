@@ -20,7 +20,7 @@
     </table>
 </br>
     <!-- <button type="submit">Save</button>  -->
-    @if(Request::url() == ('http://localhost/example-app/public/edit/'.$data['id']))
+    @if(Request::url() == url('edit/'.$data['id']))
   
     <input type="submit" value="Update"/>
     @else

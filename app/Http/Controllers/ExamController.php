@@ -189,42 +189,40 @@ class ExamController extends Controller
     }
 
     public function showChart(Request $request){
+        $class_id = $request->class_id;
 
-        $exams =Exam::select(["exams.id","exams.name","exam_subjects.total","exam_students.student_id"])
-        ->join('exam_students','exam_id','=','exams.id')
-        ->join('exam_subjects', function($join)
-        {
-            $join->on('exams.id', '=', 'exam_subjects.exam_id');
-            $join->on('exam_students.subject_id', '=', 'exam_subjects.subject_id');
-        })
-        ->where('class_id','=',$request->class_id)
-        ->get();
-
-        $exam =ExamStudent::select(["exam_students.id",\DB::raw("sum(exam_students.marks) as marks"),\DB::raw("(sum(exam_students.marks)/sum(exam_subjects.max_marks) * 100) as per"),"exam_students.student_id","exam_students.exam_id as exam_id"])
-        ->join('exam_subjects','exam_subjects.subject_id','=',"exam_students.subject_id")
-        ->leftjoin('exams', 'exam_students.exam_id', '=', 'exams.id')
-        ->leftjoin('students', 'exam_students.student_id', '=', 'students.id')
-        ->where('students.class_id','=',$request->class_id)
-        ->groupBy("exam_students.student_id");
-        // if("per">45){ 
-        //   $exam = $exam->addselect(\DB::raw("(count(DISTINCT exam_students.`student_id`)) as pass"));
-        // }
-        if("per"<45){
-          $exam = $exam->addselect(\DB::raw("(count(DISTINCT exam_students.`student_id`)) as fail"));
-        }
+        // Fetch students in the class
+        $students = \DB::table('students')->where('class_id', $class_id)->get();
         
-        $exam=$exam->get();
-        // $recs=ExamStudent::select(["exam_students.id","exams.name",\DB::raw('SUM(DISTINCT IF(((SUM(exam_students.marks)/SUM(exam_subjects.max_marks) * 100) > 45),exam_students.`student_id`,null)) as pass'),\DB::raw('SUM(DISTINCT IF(((SUM(exam_students.marks)/SUM(exam_subjects.max_marks) * 100) < 45),exam_students.`student_id`,null)) as fail')])
-        // ->leftjoin('exams', 'exam_students.exam_id', '=', 'exams.id')
-        // ->leftjoin('students', 'exam_students.student_id', '=', 'students.id')
-        // ->leftjoin('exam_subjects','exam_students.subject_id', '=', 'exam_subjects.subject_id' )
-        // ->where('students.class_id','=',$request->class_id)
-        // ->groupBy("exam_students.exam_id")
-        // ->get();
-        // select sum(exam_students.marks) as marks, sum(exam_subjects.total) as total, sum(exam_subjects.max_marks) as max, (sum(exam_students.marks)/sum(exam_subjects.max_marks) * 100) as per from `exam_students` join `exam_subjects` on `exam_students`.`subject_id` = `exam_subjects`.`subject_id` group by `student_id`,`exam_subjects`.`exam_id`
-            return response()->json([
-                'data' => $exams]);
-            
+        $passCount = 0;
+        $failCount = 0;
+
+        foreach ($students as $student) {
+            // Calculate total marks and required pass marks for this student across all their exams
+            $score = \DB::table('exam_students')
+                ->join('exam_subjects', function($join) {
+                    $join->on('exam_students.exam_id', '=', 'exam_subjects.exam_id')
+                         ->on('exam_students.subject_id', '=', 'exam_subjects.subject_id');
+                })
+                ->where('exam_students.student_id', $student->id)
+                ->select(\DB::raw('SUM(exam_students.marks) as total_obtained'), \DB::raw('SUM(exam_subjects.total) as total_required'))
+                ->first();
+
+            if ($score && $score->total_required > 0) {
+                if ($score->total_obtained >= $score->total_required) {
+                    $passCount++;
+                } else {
+                    $failCount++;
+                }
+            }
+        }
+
+        // Return the data in a format suitable for the chart labels and datasets
+        return response()->json([
+            'pass' => $passCount,
+            'fail' => $failCount,
+            'class_name' => \DB::table('classes')->where('id', $class_id)->value('name')
+        ]);
     }
    
     public function save(Request $request){

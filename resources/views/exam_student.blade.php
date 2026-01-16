@@ -71,7 +71,7 @@
               </table>
               </div>
 
-            <!-- <div>  
+            {{-- <div>  
             <select name="sub_id[]" id="sub_id" multiple="multiple" required min=1>
               
             @php
@@ -83,7 +83,7 @@
             </select></div>      
             @error('sub_id')
             <div class="alert alert-danger">{{ $message }}</div>
-            @enderror</div> -->
+            @enderror</div> --}}
 
 
       <div class="modal-footer">
@@ -391,7 +391,7 @@ $.ajax({
   // $('.modal-title').text("Update Record");
   $('#submit').text("Update");
   $('#examdata').show;
-  // window.location.reload('http://localhost/example-app/public/exam');
+  // window.location.reload('http://localhost//exam');
 }
 });
 });
@@ -427,12 +427,12 @@ $('#examdata').on('click', '#submit', function (event) {
 
       success: function (data) {
         // window.location.reload(true);
-        location.href = "http://localhost/example-app/public/exam_list"
+        location.href = "{{ url('exam_list') }}";
       }
     });
     }else if($('#submit').text() == 'Update'){
     $.ajax({
-      url: 'http://localhost/example-app/public/exam/student/update/'+edit_id,
+      url: '{{ url("exam/student/update/") }}/' + edit_id,
 
       type: "post",
 
@@ -442,7 +442,7 @@ $('#examdata').on('click', '#submit', function (event) {
       success: function (data) {
           
           // window.location.reload(true);
-          location.href = "http://localhost/example-app/public/exam_list"
+          location.href = "{{ url('exam_list') }}";
           
       }
     });

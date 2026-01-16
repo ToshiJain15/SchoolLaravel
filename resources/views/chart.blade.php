@@ -94,42 +94,22 @@ var myChart = new Chart(ctx, {
       <canvas id="myChart" width="400" height="150"></canvas>
 <script>
   function renderGraph(data){
-    // if(window.myChart!=null){
-    //       window.myChart.destroy();
-    //     }
-    // mychart.clearRect(0, 0, canvas.width, canvas.height);
     var ctx = document.getElementById('myChart').getContext('2d');
 
-    // var ctx= $("#myChart")[0].getContext("2d");
-      window.myChart = new Chart(ctx, {
-          type: 'line',
+      window.examChart = new Chart(ctx, {
+          type: 'bar',
           data: {
-            labels: [data.data[0].name, data.data[0].name, data.data[0].name, data.data[0].name],
+            labels: [data.class_name],
             datasets: [{ 
-                data: [3,10, 3, 4],
+                data: [data.pass],
                 label: "Pass",
-                pointBorderWidth:10,
-                strokeColor : "rgba(220,220,220,1)",
-                pointColor : "rgba(220,220,220,1)",
-                pointStrokeColor : "#fff",
-                pointHighlightFill : "#fff",
-                pointHighlightStroke : "rgba(220,220,220,1)",
                 borderColor: "#71d1bd",
                 backgroundColor: "#7bb6dd",
-                fill: false,
               }, { 
-                data: [10,0,1,4],
+                data: [data.fail],
                 label: "Fail",
-                pointBorderWidth:10,
-                strokeColor : "rgba(220,220,220,1)",
-                pointColor : "rgba(220,220,220,1)",
-                pointStrokeColor : "#fff",
-                pointHighlightFill : "#fff",
-                pointHighlightStroke : "rgba(220,220,220,1)",
                 borderColor: "#c45850",
-                // backgroundColor: "#71d1bd",
                 backgroundColor: "#FF1413",
-                fill: false,
               }]
           },
           options: {
@@ -140,30 +120,19 @@ var myChart = new Chart(ctx, {
               },
               title: {
                 display: true,
-                text: 'Exam Report'
+                text: 'Exam Result Summary for ' + data.class_name
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
               }
             }
-          },
-          scales: {
-            y: {
-              type: 'linear',
-              display: true,
-              position: 'left',
-            },
-            y1: {
-              type: 'linear',
-              display: true,
-              position: 'right',
-            
-              // grid line settings
-              grid: {
-                drawOnChartArea: false, // only want the grid lines for one axis to show up
-              },
-            },
           }
-          
         });
-        
   }
   // var ctx = document.getElementById('myChart').getContext('2d');;
   //     var myChart = new Chart(ctx, {
@@ -220,7 +189,7 @@ $('#class_id').on('change',function(event) {
   // event.preventDefault();
     $.ajax({
 
-      url: '<?php echo url('/')?>/chart/data',
+      url: '{{ url("chart/data") }}',
     
       type: "get",
 
@@ -228,18 +197,10 @@ $('#class_id').on('change',function(event) {
       dataType: 'json',
 
       success: function (data) {
-        console.log(data.data[0]);
-        try {
-        myChart.destroy()
-          
-        } catch (error) {
-          
+        if (window.examChart) {
+            window.examChart.destroy();
         }
-
-        // $('#myChart').destroy();
         renderGraph(data);
-        // window.location.reload(true);
-        // location.href = "http://localhost/example-app/public/chart"
       }
     });
     });
@@ -361,44 +322,6 @@ $.ajaxSetup({
 //   $("#class_id").ready(myfunction);
 //   }
 
-$('#class_id').on('change',function (event) {
-  // event.preventDefault();
-
-    var id = $("#exam_id").val();
-    var name = $("#name").val();
-    if($('#submit').text() == 'Save'){
-    $.ajax({
-
-      url: '/chart',
-    
-      type: "post",
-
-      data: $("#examdata").serialize(),
-      dataType: 'json',
-
-      success: function (data) {
-        // window.location.reload(true);
-        location.href = "http://localhost/example-app/public/chart"
-      }
-    });
-    }else if($('#submit').text() == 'Update'){
-    $.ajax({
-      url: 'http://localhost/example-app/public/exam/update/'+edit_id,
-
-      type: "post",
-
-      data: $("#examdata").serialize(),
-      dataType: 'json',
-
-      success: function (data) {
-          
-          // window.location.reload(true);
-          location.href = "http://localhost/example-app/public/exam_list"
-          
-      }
-    });
-    }
-  })
 });
 
 // });

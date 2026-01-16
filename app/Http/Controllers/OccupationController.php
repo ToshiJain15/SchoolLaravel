@@ -30,34 +30,19 @@ class OccupationController extends Controller
     }
 
     public function showAjax(){
-        // $data['occupation'] = $count =Occupation::select(["occupations.id","occupations.name",\DB::raw("count(students.id) as count")])
-        // ->leftjoin('students', 'students.occupation', '=', 'occupations.id')
-        // ->groupBy("occupations.id")
-        // ->get();
-        $occupations =Occupation::select(["occupations.id","occupations.name",\DB::raw("count(students.id) as count")])
-        ->leftjoin('students', 'students.occupation', '=', 'occupations.id')
-        ->groupBy("occupations.id")
-        ->get();
-
-        // $data['occupation'] = $occupations = Occupation::get();
+        $occupations = Occupation::get();
             
             $rec=[];
             foreach($occupations as $key => $val){
                  $rec[]=[
                  $val['id'],
                  $val['name'],
-                 $val['count'],
+                 0, 
 
-                 "<a href='#' id='$val->id' class='edit btn btn-primary'  data-id='{{ $val->id }}'>Edit</a>
+                 "<a href='#' id='".$val->id."' class='edit btn btn-primary'  data-id='".$val->id."'>Edit</a>
     
-                 <a href='#'  id='$val->id' class='delete btn btn-primary' data-toggle='modal' data-target='#confirmModal' data-id='{{ $val->id }}'>Delete</a>"
-            
-      
-                // "<a href='occupation/edit/$val->id'>Edit</a>
-    
-                // <a href='occupation/delete/$val->id'>Delete</a>"
+                 <a href='#'  id='".$val->id."' class='delete btn btn-primary' data-toggle='modal' data-target='#confirmModal' data-id='".$val->id."'>Delete</a>"
                 ];
-            
             }
 
             return response()->json([

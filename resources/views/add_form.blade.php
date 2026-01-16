@@ -28,7 +28,7 @@
     </table>
 </br>
     
-    @if(Request::url() == ('http://localhost/example-app/public/class/edit/'.$data['id']))
+    @if(Request::url() == url('class/edit/'.$data['id']))
     <input type="submit" value="Update"/>
     @else
     <input type="submit" value="Add"/>

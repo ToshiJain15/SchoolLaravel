@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
-class LoginController extends Controller
+class LogController extends Controller
 {
 
     protected function authenticated(Request $request, $user)
@@ -77,28 +77,20 @@ class LoginController extends Controller
     }
     // SELECT User.id, User.name, count(students.id) as count FROM User left join students on students.class_name=User.id group by User.id
     
-    public function viewAjax(){
-        $User =User::select(["User.id","User.name",\DB::raw("count(students.id) as count")])
-        ->leftjoin('students', 'students.class_id', '=', 'User.id')
-        ->groupBy("User.id")
-        ->get();
+    public function showAjax(){
+        $users = User::get();
             
             $rec=[];
-            foreach($User as $key => $val){
+            foreach($users as $key => $val){
                  $rec[]=[
-                 $val['id'],
-                 $val['name'],
-                 $val['count'],
+                 $val->id,
+                 $val->name,
+                 $val->email,
       
-                 "<a href='#' id='$val->id' class='edit btn btn-primary'  data-id='{{ $val->id }}'>Edit</a>
+                 "<a href='#' id='".$val->id."' class='edit btn btn-primary' data-id='".$val->id."'>Edit</a>
     
-                 <a href='#'  id='$val->id' class='delete btn btn-primary' data-toggle='modal' data-target='#confirmModal' data-id='{{ $val->id }}'>Delete</a>"
+                 <a href='#' id='".$val->id."' class='delete btn btn-primary' data-id='".$val->id."'>Delete</a>"
                  ];
-                // "<a href='class/edit/$val->id'>Edit</a>
-    
-                // <a href='class/delete/$val->id'>Delete</a>"
-                // ];
-            
             }
            
             return response()->json([

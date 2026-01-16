@@ -27,8 +27,8 @@
     <thead>
         <th>Id</th>
         <th>Name</th>
-        <!-- <th><input type="button" value="Add Class" onclick="window.location.href='http://localhost/example-app/public/class/add'"></th> -->
-        <th><button type="button" class="btn btn-primary add" onclick="location.href='http://localhost/example-app/public/exam'">Add Exam</button>
+        <!-- <th><input type="button" value="Add Class" onclick="window.location.href='http://localhost//class/add'"></th> -->
+        <th><button type="button" class="btn btn-primary add" onclick="location.href='{{ url('exam') }}'">Add Exam</button>
         </th>
     </thead>
     <tbody>
@@ -69,7 +69,7 @@
 //   // $('.modal-title').text("Update Record");
 //   $('#submit').text("Update");
 //   $('#examdata').show;
-//   // window.location.reload('http://localhost/example-app/public/exam');
+//   // window.location.reload('http://localhost//exam');
 // }
 // });
 // });

@@ -53,7 +53,7 @@
               <th>Occupation</th>
               <th>Languages</th>
               <th>Photo</th>
-              <!-- <th ><input type="button" value="Add" onclick="window.location.href='http://localhost/example-app/public/student/render'"></th> -->
+              <!-- <th ><input type="button" value="Add" onclick="window.location.href='{{ url('student/render') }}'"></th> -->
 
               <th><button type="button" class="add btn btn-primary" data-toggle="modal" data-target="#myModal">Add Student</button>
 
@@ -195,7 +195,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        @if(Request::url() == ('http://localhost/example-app/public/student'))
+        @if(Request::url() == url('student'))
     <input type="submit"  id="submit" class="add btn btn-primary" value="Add"/>
     @else
     <input type="submit"  id="submit" class="update btn btn-primary" value="Update"/>

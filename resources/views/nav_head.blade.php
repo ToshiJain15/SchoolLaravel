@@ -20,29 +20,29 @@
 </head>
 <body>
 @php
-$location="http://localhost/example-app/public";                    
-$class=\DB::table('exams')->where('class_id','=','1')->first('class_id');
+$location=url('/');                    
+$class=\DB::table('exams')->get();
 @endphp
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <ul class="navbar-nav mr-auto" style='list-style-type: none; text-indent: 90px'>
                              @if(Gate::allows('isAdmin'))
-                            <li class="nav-item" style='float:left;'><a class="nav-link" href={{$location}}/list style='text-decoration:none;'>{{ __('Class List') }}</a></li>
-                            <li class="nav-item" style='float:left;'><a class="nav-link" href={{$location}}/occupation style='text-decoration:none;'>{{ __('Occupation List') }}</a></li>
-                            <li class="nav-item" style='float:left';><a class="nav-link" href={{$location}}/student style='text-decoration:none;'>{{ __('Student List') }}</a></li>
-                            <li class="nav-item" style='float:left';><a class="nav-link" href={{$location}}/city style='text-decoration:none;'>{{ __('City List') }}</a></li>
-                            <li class="nav-item" style='float:left';><a class="nav-link" href={{$location}}/subject style='text-decoration:none;'>{{ __('Subject List') }}</a></li>
+                            <li class="nav-item" style='float:left;'><a class="nav-link" href="{{ url('list') }}" style='text-decoration:none;'>{{ __('Class List') }}</a></li>
+                            <li class="nav-item" style='float:left;'><a class="nav-link" href="{{ url('occupation') }}" style='text-decoration:none;'>{{ __('Occupation List') }}</a></li>
+                            <li class="nav-item" style='float:left';><a class="nav-link" href="{{ url('student') }}" style='text-decoration:none;'>{{ __('Student List') }}</a></li>
+                            <li class="nav-item" style='float:left';><a class="nav-link" href="{{ url('city') }}" style='text-decoration:none;'>{{ __('City List') }}</a></li>
+                            <li class="nav-item" style='float:left';><a class="nav-link" href="{{ url('subject') }}" style='text-decoration:none;'>{{ __('Subject List') }}</a></li>
                             @endif
                             @if(Gate::allows('isAdmin') || Gate::allows('isStudent'))
-                            <li class="nav-item" style='float:left';><a class="nav-link" href={{$location}}/exam_list style='text-decoration:none;'>{{ __('Exam List') }}</a></li>
+                            <li class="nav-item" style='float:left';><a class="nav-link" href="{{ url('exam_list') }}" style='text-decoration:none;'>{{ __('Exam List') }}</a></li>
                             @foreach($class as $key => $val)
-                                <li class="nav-item" style='float:left';><a class="nav-link"  href={{$location}}/exam/student/{{$val}} style='text-decoration:none;'>{{ __('Exam Student List') }}</a></li>
+                                <li class="nav-item" style='float:left';><a class="nav-link"  href="{{ url('exam/student/'.$val->id) }}" style='text-decoration:none;'>{{ __('Exam Student List') }} ({{$val->name}})</a></li>
                             @endforeach
                             @endif
                             @if(Gate::allows('isAdmin') || Gate::allows('isManager'))
-                            <li class="nav-item" style='float:left';><a class="nav-link" href={{$location}}/chart_list style='text-decoration:none;'>{{ __('Chart List') }}</a></li>
+                            <li class="nav-item" style='float:left';><a class="nav-link" href="{{ url('chart_list') }}" style='text-decoration:none;'>{{ __('Chart List') }}</a></li>
                             @endif
                             @if(Gate::allows('isAdmin'))
-                            <li class="nav-item" style='float:left';><a class="nav-link" href={{$location}}/user_list style='text-decoration:none;'>{{ __('User List') }}</a></li>
+                            <li class="nav-item" style='float:left';><a class="nav-link" href="{{ url('user_list') }}" style='text-decoration:none;'>{{ __('User List') }}</a></li>
                             @endif
                         </ul>
                             <ul class="navbar-nav ml-auto">
@@ -73,7 +73,7 @@ $class=\DB::table('exams')->where('class_id','=','1')->first('class_id');
 </html>
 @yield('form')
 <!-- 
-$location="http://localhost/example-app/public";
+$location=url('/');
 $class=\DB::table('exams')->select('class_id')->get();
 $rec=[];
 
@@ -88,7 +88,7 @@ $rec=[];
     "<li style='float:left';><a href=$location/exam/student/{$val->class_id} style='text-decoration:none;'>Exam Student List</a></li></ul><br><br>",
 
     }
-  <a href="http://localhost/example-app/public/logout" onclick="event.preventDefault();
+  <a href="{{ url('/logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" class="dropdown-item">
                                         Logout
                                     </a>  

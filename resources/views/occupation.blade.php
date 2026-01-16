@@ -24,7 +24,7 @@
         <th>Id</th>
         <th>Name</th>
         <th>Count</th>
-        <!-- <th><input type="button" value="Add occupation" onclick="window.location.href='http://localhost/example-app/public/occupation/render'"></th> -->
+        <!-- <th><input type="button" value="Add occupation" onclick="window.location.href='http://localhost/public/occupation/render'"></th> -->
 
         <th><button type="button" class="btn btn-primary add" data-toggle="modal" data-target="#myModal">Add Occupation</button>
 
@@ -53,7 +53,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        @if(Request::url() == ('http://localhost/example-app/public/occupation'))
+        @if(Request::url() == url('occupation'))
     <input type="submit"  id="submit" class="update btn btn-primary" value="Add"/>
     @else
     <input type="submit"  id="submit" class="add btn btn-primary" value="Update"/>

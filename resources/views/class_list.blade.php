@@ -24,7 +24,7 @@
         <th>Id</th>
         <th>Name</th>
         <th>Count</th>
-        <!-- <th><input type="button" value="Add Class" onclick="window.location.href='http://localhost/example-app/public/class/add'"></th> -->
+        <!-- <th><input type="button" value="Add Class" onclick="window.location.href='http://localhost//class/add'"></th> -->
         <th><button type="button" class="btn btn-primary add" data-toggle="modal" data-target="#myModal">Add Class</button>
 
 <div class="modal fade" class="btn btn-primary add" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -52,7 +52,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        @if(Request::url() == ('http://localhost/example-app/public/list'))
+        @if(Request::url() == url('list'))
     <input type="submit"  id="submit" class="update btn btn-primary" value="Add"/>
     @else
     <input type="submit"  id="submit" class="add btn btn-primary" value="Update"/>

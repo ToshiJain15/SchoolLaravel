@@ -54,22 +54,21 @@
                             @endif
                         @else
                         @php
-                        $location="http://localhost/example-app/public";                    
+                        $location=url('/');                    
                         $class=\DB::table('exams')->where('class_id','=','1')->first('class_id');
-
                         @endphp
                         <!-- <ul style='list-style-type: none; text-indent: 90px'> -->
-                            <li class="nav-item" style='float:left;'><a class="nav-link" href={{$location}}/list style='text-decoration:none;'>{{ __('Class List') }}</a></li>
-                            <li class="nav-item" style='float:left;'><a class="nav-link" href={{$location}}/occupation style='text-decoration:none;'>{{ __('Occupation List') }}</a></li>
-                            <li class="nav-item" style='float:left';><a class="nav-link" href={{$location}}/student style='text-decoration:none;'>{{ __('Student List') }}</a></li>
-                            <li class="nav-item" style='float:left';><a class="nav-link" href={{$location}}/city style='text-decoration:none;'>{{ __('City List') }}</a></li>
-                            <li class="nav-item" style='float:left';><a class="nav-link" href={{$location}}/subject style='text-decoration:none;'>{{ __('Subject List') }}</a></li>
-                            <li class="nav-item" style='float:left';><a class="nav-link" href={{$location}}/exam_list style='text-decoration:none;'>{{ __('Exam List') }}</a></li>
+                            <li class="nav-item" style='float:left;'><a class="nav-link" href="{{ url('list') }}" style='text-decoration:none;'>{{ __('Class List') }}</a></li>
+                            <li class="nav-item" style='float:left;'><a class="nav-link" href="{{ url('occupation') }}" style='text-decoration:none;'>{{ __('Occupation List') }}</a></li>
+                            <li class="nav-item" style='float:left';><a class="nav-link" href="{{ url('student') }}" style='text-decoration:none;'>{{ __('Student List') }}</a></li>
+                            <li class="nav-item" style='float:left';><a class="nav-link" href="{{ url('city') }}" style='text-decoration:none;'>{{ __('City List') }}</a></li>
+                            <li class="nav-item" style='float:left';><a class="nav-link" href="{{ url('subject') }}" style='text-decoration:none;'>{{ __('Subject List') }}</a></li>
+                            <li class="nav-item" style='float:left';><a class="nav-link" href="{{ url('exam_list') }}" style='text-decoration:none;'>{{ __('Exam List') }}</a></li>
                             @foreach($class as $key => $val)
-                                <li class="nav-item" style='float:left';><a class="nav-link"  href={{$location}}/exam/student/{{$val}} style='text-decoration:none;'>{{ __('Exam Student List') }}</a></li>
+                                <li class="nav-item" style='float:left';><a class="nav-link"  href="{{ url('exam/student/'.$val) }}" style='text-decoration:none;'>{{ __('Exam Student List') }}</a></li>
                             @endforeach
-                            <li class="nav-item" style='float:left';><a class="nav-link" href={{$location}}/chart_list style='text-decoration:none;'>{{ __('Chart List') }}</a></li>
-                            <li class="nav-item" style='float:left';><a class="nav-link" href={{$location}}/user_list style='text-decoration:none;'>{{ __('User List') }}</a></li>
+                            <li class="nav-item" style='float:left';><a class="nav-link" href="{{ url('chart_list') }}" style='text-decoration:none;'>{{ __('Chart List') }}</a></li>
+                            <li class="nav-item" style='float:left';><a class="nav-link" href="{{ url('user_list') }}" style='text-decoration:none;'>{{ __('User List') }}</a></li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

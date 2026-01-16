@@ -147,7 +147,7 @@
               @enderror</td>
             </tr>
             <tr>
-              <td> @if(Request::url() == ('http://localhost/example-app/public/student/edit/'.$data['id']))
+              <td> @if(Request::url() == url('student/edit/'.$data['id']))
             <input type="submit" value="Update"/>
             @else
             <input type="submit" value="Add"/>

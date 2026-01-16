@@ -29,11 +29,11 @@
         <th>Name</th>
         <th>Total Marks</th>
         <th>Result</th>
-        <!-- <th><input type="button" value="Add Class" onclick="window.location.href='http://localhost/example-app/public/class/add'"></th> -->
+        <!-- <th><input type="button" value="Add Class" onclick="window.location.href='http://localhost/public/class/add'"></th> -->
         @php
         $class=\DB::table('exams')->select('id')->get();
         @endphp
-        <th><button type="button" class="btn btn-primary add" onclick="location.href='http://localhost/example-app/public/exam/addstudent/{{$exam_id['id']}}'">Add Student</button>
+        <th><button type="button" class="btn btn-primary add" onclick="location.href='{{ url('exam/addstudent/'.$exam_id['id']) }}'">Add Student</button>
         </th>
     </thead>
     <tbody>
@@ -78,7 +78,7 @@
 //   // $('.modal-title').text("Update Record");
 //   $('#submit').text("Update");
 //   $('#examdata').show;
-//   // window.location.reload('http://localhost/example-app/public/exam');
+//   // window.location.reload('http://localhost/public/exam');
 // }
 // });
 // });
